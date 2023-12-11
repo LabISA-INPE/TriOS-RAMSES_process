@@ -1,0 +1,8 @@
+path_es=
+path_lw=
+path_lsky=
+path_eu=
+path_ed=
+path_lu=
+sensores=
+nome_pontos=
