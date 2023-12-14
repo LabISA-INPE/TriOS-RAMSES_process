@@ -1,4 +1,4 @@
-# Rotina RRS e KD em Python
+# Rotina TR em Python
 
 Rotina em Python convertida da rotina em R para pré-processamento e cálculo dos dados de rrs.
 
@@ -53,13 +53,39 @@ Caso queira testar o código, há um diretório chamado example com o arquivos c
 
 Inicialmente, temos a tela inicial que possui botões para a entrada dos 6 arquivos de dados indicando seu caminho no diretório. Além disso, possui a opção para 3 ou 6 sensores. Por fim, o código será executado ao clicar no botão "Iniciar rotina".
 
+![Tela Inicial](./docs/inicio-input.png)
+
 ## Renomeando os nomes dos pontos
 
-Nesta tela, ao clicar em "Buscar nome dos pontos", será buscado os nomes dos pontos nos arquivos de entrada e será exibido os nomes de Comment, CommentSub1, CommentSub2 e CommentSub3 dos arquivos de entrada. Desse modo, é possível renomear os nomes dos pontos a partir de uma dessas opções. Também é possível selecionar mais de uma opção para juntar os nomes desses pontos e será exibido em nomes finais o resultado dessa junção. Após isso, o usuário clicará em "Salvar nomes e continuar" que abrirá uma janela para indicar o caminho que deseja salvar os dados com o nome dos pontos renomeados em um arquivo pickle (.pkl) e também já será salvo os dados mesclados pela data e interpolados.
+Nesta tela, ao clicar em "Buscar nome dos pontos", será buscado os nomes dos pontos nos arquivos de entrada e será exibido os nomes de Comment, CommentSub1, CommentSub2 e CommentSub3 dos arquivos de entrada. 
+
+![Tela inicial da renomeação](./docs/nomes-inicial.png)
+
+Desse modo, após isso, é possível renomear os nomes dos pontos a partir de uma dessas opções. Também é possível selecionar mais de uma opção para juntar os nomes desses pontos e será exibido em nomes finais o resultado dessa junção. 
+
+![Renomeando os nomes dos pontos](./docs/nomes-buscado.png)
+
+Após isso, o usuário clicará em "Salvar nomes e continuar" que abrirá uma janela para indicar o caminho que deseja salvar os dados com o nome dos pontos renomeados em um arquivo pickle (.pkl) e também já será salvo os dados mesclados pela data e interpolados.
+
+![Salvando nomes](./docs/nomes-salvar.png)
 
 ## Gráficos para avaliação de rrs
 
-Após isso, ao clicar no botão "Iniciar Avaliação", será aberto uma janela para selecionar o arquivo salvo anteriormente. Após isso, será calulado o rrs com o valor padrão de rho (0,028). Assim, será exibido os gráficos de cada ponto com suas medidas, que possibilitará o usuário avaliá-los para manter apenas as medidas relevantes. Para isso, nessa parte do processo, é possivel, caso necessário, alterar o nome do ponto, calcular o rrs novamente com um valor de rho específico, calcular os valores dos quartis ou exibir os valores originais e excluir as medidas inválidas indicando o número no final da linha que deseja excluir. Assim que um ponto estiver tudo corretamente calculado, ao clicar em próximo gráfico será exibido o próximo ponto. Após todos os pontos serem avaliados, será exibido os gráficos de cada ponto com os valores da medida em vermelho e a mediana deles em preto e será habilitado o botão de salvar. O botão de salvar abrirá uma janela na qual o usuário poderá selecionar o diretório que deseja salvar os resultados, incluindo os dados de cada sensor interpolados nos comprimentos de onda de 400 a 900 nm, o arquivo com o valor de rrs e a mediana e o desvio padrão do rrs de cada ponto, além de também salvar o gráfico final.
+Depois, você será redirecionado para a página para validação dos pontos.Ao clicar no botão "Iniciar Avaliação", será aberto uma janela para selecionar o arquivo salvo anteriormente. Após isso, será calulado o rrs com o valor padrão de rho (0,028). 
+
+![Tela inicial dos gráficos](./docs/graficos-selecionar.png)
+
+Assim, será exibido os gráficos de cada ponto com suas medidas, que possibilitará o usuário avaliá-los para manter apenas as medidas relevantes. Para isso, nessa parte do processo, é possivel, caso necessário, alterar o nome do ponto, calcular o rrs novamente com um valor de rho específico, calcular os valores dos quartis ou exibir os valores originais e excluir as medidas inválidas indicando o número no final da linha que deseja excluir. Assim que um ponto estiver tudo corretamente calculado, ao clicar em próximo gráfico será exibido o próximo ponto. 
+
+![Gráficos para Avaliação de RRS](./docs/graficos-ponto.png)
+
+Após todos os pontos serem avaliados, será exibido os gráficos de cada ponto com os valores da medida em vermelho e a mediana deles em preto e será habilitado o botão de salvar. 
+
+![Gráficos resultantes do cálculo](./docs/graficos-resultado.png)
+
+O botão de salvar abrirá uma janela na qual o usuário poderá selecionar o diretório que deseja salvar os resultados, incluindo os dados de cada sensor interpolados nos comprimentos de onda de 400 a 900 nm, o arquivo com o valor de rrs e a mediana e o desvio padrão do rrs de cada ponto, além de também salvar o gráfico final.
+
+![Gráficos resultantes do cálculo](./docs/graficos-salvar.png)
 
 ## Ainda pendente
 
