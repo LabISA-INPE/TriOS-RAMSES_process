@@ -1,4 +1,4 @@
-# Rotina TR em Python
+# Rotina RRS e KD em Python
 
 Rotina em Python convertida da rotina em R para pré-processamento e cálculo dos dados de rrs.
 
