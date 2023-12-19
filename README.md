@@ -1,6 +1,6 @@
 # Rotina RRS e KD em Python
 
-Rotina em Python convertida da rotina em R para pré-processamento e cálculo dos dados de rrs.
+Rotina em Python pré-processamento de dados de quantidades radiométricas obtidos pelo sensor TriOS-RAMSES e cálculo da Reflectância de Sensoriamento Remoto <sub>rs</sub>.
 
 ## Instalação e execução
 
@@ -47,7 +47,7 @@ Execute o código em Python:
 python main.py
 ```
 
-Caso queira testar o código, há um diretório chamado example com o arquivos com dados de entrada (es, lw, lsky, eu, ed, lu) para fazer a sua execução.
+Caso queira testar o código, há um diretório chamado example com o arquivos com dados de entrada (E<sub>s</sub>, L<sub>w</sub>, L<sub>sky</sub>, E<sub>u</sub>, E<sub>d</sub>, L<sub>u</sub>) para fazer a sua execução.
 
 ## Tela inicial
 
