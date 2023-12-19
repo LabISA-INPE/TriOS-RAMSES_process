@@ -1,6 +1,17 @@
 # Rotina RRS e KD em Python
 
-Rotina em Python pré-processamento de dados de quantidades radiométricas obtidos pelo sensor TriOS-RAMSES e cálculo da Reflectância de Sensoriamento Remoto <sub>rs</sub>.
+Rotina em Python pré-processamento de dados de quantidades radiométricas obtidos pelo sensor TriOS-RAMSES e cálculo da Reflectância de Sensoriamento Remoto (R<sub>rs</sub>).
+
+# Passo-a-passo da rotina
+
+Esta rotina foi desenvolvida para o processamento dos dados do TriOS-RAMSES, extraídos do software fornecido pela fabricante (MSDA). Os dados são exportados em formato .txt e são lidos, assim, pela rotina. Arquivos de exemplo são fornecidos na pasta "example". Basicamente, quatro passos principais são realizados na rotina:
+
+* Leitura dos dados exportados do MSDA.
+* Seleção das medidas medidas ao mesmo tempo, com base na coluna DateTime.
+* Interpolação da resolução espectral nativa (~3.3nm) para 1 nm.
+* Cálculo da Rrs a partir do método de Mobley (2015).
+* Cálculo da mediana e desvio padrão da R<sub>rs<sub>.
+* Exportação dos dados no formato utilizado pelo Banco de Dados do LabISA.
 
 ## Instalação e execução
 
