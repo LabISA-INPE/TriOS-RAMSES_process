@@ -25,19 +25,45 @@ sensores = 0                # Número de sensores
 final_plot = {}             # Dicionário para armazenar o gráfico final
 percent = False             # Indicador para cálculo de percentil
 data = {}                   # Dados obtidos
+zoom = False
+rho_ = 0.028
+delete_var = False
 
 # Função para criar a interface gráfica
 def interface_graficos(main_frame, initial_interface):
+    def on_close(event):
+        global zoom, rho_, delete_var
+        zoom = False
+        zoom_button['state'] = NORMAL
+        if not delete_var:
+            calculate_plots(rho_)
+        else:
+            delete_plots(deletar=False)
+        
     # Função interna para exibir o gráfico na interface
     def display_plot(figure):
-        global plot_widget
-        plot_widget = FigureCanvasTkAgg(figure, canvas)
-        plot_widget.get_tk_widget().pack()
-        plt.close()
+        global plot_widget, zoom
+        if zoom:
+            figure.canvas.mpl_connect('close_event', on_close)
+            plt.show(block=False)
+        else:
+            plot_widget = FigureCanvasTkAgg(figure, canvas)
+            plot_widget.get_tk_widget().pack()
+
+    def zoom_plot():
+        global zoom, rho_, delete_var
+        zoom = True
+        zoom_button['state'] = DISABLED
+        if not delete_var:
+            calculate_plots(rho_)
+        else:
+            delete_plots(deletar=False)
 
     # Função interna para obter e exibir o gráfico atual
     def get_current_plot():
         global cont, rrs_filter, pontos
+
+        plt.close()
 
         try:
             # Obtenção dos resultados Rrs
@@ -68,7 +94,8 @@ def interface_graficos(main_frame, initial_interface):
 
     # Função interna para iniciar o processo de obtenção dos plots
     def start_plots(rho):
-        global data, sensores
+        global data, sensores, rrs_filter
+        
 
         path = filedialog.askopenfilename(defaultextension=".pkl", filetypes=[("Pickle Files", "*.pkl")])
 
@@ -90,29 +117,35 @@ def interface_graficos(main_frame, initial_interface):
             delete_button['state'] = NORMAL
             next_plot_button['state'] = NORMAL
             medidas['state'] = NORMAL
+            zoom_button['state'] = NORMAL
 
             sensores = read_sensores()
+
+            rrs_filter = data
 
             calculate_plots(rho)
 
     # Função interna para calcular os plots com base no valor de rho
     def calculate_plots(rho):
-        global rrs_filter, pontos, plot_widget, results, sensores, percent, data
+        global rrs_filter, pontos, plot_widget, results, sensores, percent, data, rho_, delete_var
+
+        delete_var = False
+
+        # plt.close()
 
         try:
-            rho = float(rho)
+            rho_ = float(rho)
         except:
             messagebox.showerror(title='Erro', message='Valor inválido. Certifique-se de adicionar um número com decimais separados por ponto e não vírgula.')
             return
 
         try:
-            results = rrs_calculation(data, sensores, rho)
+            results = rrs_calculation(data, sensores, rho_)
         except:
             messagebox.showerror(title='Erro', message='Ocorreu um erro ao calcular o rrs! Verifique se o arquivo selecionado no início é realmente válido.')
             return
-
         if percent:
-            get_current_plot_percentil(rho)
+            get_current_plot_percentil(rho_)
         else:
             get_current_plot()
 
@@ -120,12 +153,16 @@ def interface_graficos(main_frame, initial_interface):
         next_plot_button['state'] = NORMAL
 
     # Função interna para excluir pontos selecionados
-    def delete_plots():
-        global rrs_filter, plot_widget
+    def delete_plots(deletar):
+        global rrs_filter, plot_widget, delete_var
 
-        points = medidas.get()           
+        delete_var = True
 
-        if points:
+        points = medidas.get()     
+                   
+        plt.close()      
+
+        if points and deletar:
             delete = [int(x) for x in points.split(',')]
             try:
                 rrs_filter = rrs_filter.drop(rrs_filter.index[delete], axis=0)
@@ -133,9 +170,18 @@ def interface_graficos(main_frame, initial_interface):
             except:
                 messagebox.showerror(title='Erro', message='Algum ponto indicado é inválido.')
                 return
-
+            
             plot_widget.get_tk_widget().pack_forget()
 
+            try:
+                figure = plot(rrs_filter)
+                display_plot(figure)
+            except:
+                messagebox.showerror(title='Erro', message='Não restou nenhuma medida no gráfico.')
+                return
+            
+        if not deletar:
+            plot_widget.get_tk_widget().pack_forget()
             try:
                 figure = plot(rrs_filter)
                 display_plot(figure)
@@ -143,15 +189,19 @@ def interface_graficos(main_frame, initial_interface):
                 plt.close()
                 messagebox.showerror(title='Erro', message='Não restou nenhuma medida no gráfico.')
                 return
+    
 
     # Função para exibir o gráfico percentil ou os originais
     def get_current_plot_percentil(rho):
         global cont, rrs_filter, pontos, percent
 
+        plt.close()
+
         rrs = results['rrs']
         pontos = rrs['estacoes_id'].unique()
 
-        percent = not percent  # Alternância entre exibição percentil e originais
+        if not zoom:
+            percent = not percent  # Alternância entre exibição percentil e originais
 
         if plot_widget:
             plot_widget.get_tk_widget().pack_forget()
@@ -178,7 +228,11 @@ def interface_graficos(main_frame, initial_interface):
 
     # Função para avançar para o próximo gráfico
     def next_plots():
-        global cont, rrs_filtered, rrs_filter, pontos, results, rrs_calculated, final_plot, percent, sensores
+        global cont, rrs_filtered, rrs_filter, pontos, results, rrs_calculated, final_plot, percent, sensores, delete_var
+        
+        plt.close()
+
+        delete_var = False
 
         try:
             rrs_filter, results = update_name_points(rrs_filter=rrs_filter, results=results, new_name=point_name.get(), old_name=pontos[cont], sensores=sensores)
@@ -300,6 +354,9 @@ def interface_graficos(main_frame, initial_interface):
     canvas = Canvas(first_container, width=660, height=480, bg='white')
     canvas.pack(anchor=W, expand=True, padx=20)
 
+    zoom_button = Button(first_container, text="Zoom no Gráfico", style="TButton.TButton", command=zoom_plot, state=DISABLED)
+    zoom_button.pack()
+
     # Rótulo, entrada e botão para o valor de rho
     rho_label = Label(fthird_container, text="Valor de rho:", font=("Arial", "13"), style=("TLabel"))
     rho_label.grid()
@@ -324,7 +381,7 @@ def interface_graficos(main_frame, initial_interface):
     medidas.grid()
 
     # Botão para excluir os pontos selecionados
-    delete_button = Button(fourth_container, text="Excluir", style="TLabe2.TButton", state=DISABLED, command=delete_plots)
+    delete_button = Button(fourth_container, text="Excluir", style="TLabe2.TButton", state=DISABLED, command=lambda:delete_plots(deletar=True))
     delete_button.grid(pady=5)
 
     # Botão para avançar para o próximo gráfico
