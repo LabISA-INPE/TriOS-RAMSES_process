@@ -170,11 +170,11 @@ def interface_graficos(main_frame, initial_interface):
     def next_plots():
         global cont, rrs_filtered, rrs_filter, pontos, results, rrs_calculated, final_plot, percent, sensores
 
-        try:
-            rrs_filter, results = update_name_points(rrs_filter=rrs_filter, results=results, new_name=point_name.get(), old_name=pontos[cont], sensores=sensores)
-        except:
-            messagebox.showerror(title='Erro', message='Ocorreu um erro ao tentar substituir o nome do ponto!')
-            return
+        #try:
+        #    rrs_filter, results = update_name_points(rrs_filter=rrs_filter, results=results, new_name=point_name.get(), old_name=pontos[cont], sensores=sensores)
+        #except:
+        #    messagebox.showerror(title='Erro', message='Ocorreu um erro ao tentar substituir o nome do ponto!')
+        #    return
 
         if rrs_filtered.empty:
             rrs_filtered = rrs_filter

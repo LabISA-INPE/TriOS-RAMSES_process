@@ -97,9 +97,9 @@ def interface_nomes(main_frame, plots_interface):
         if len(names_final.get(0, END)) > 0:
             try:
                 if sensores == 6:
-                    renamed_results = rename_points_sensor_6(new_name=names_final.get(0, END), lw_=results['lw'], lsky_=results['lsky'], es_=results['es'], ed_=results['ed'], eu_=results['eu'], lu_=results['lu'], quant_sensors=sensores)
+                    renamed_results = rename_points_sensor_6(new_name=names_final.get(0, END), lw_=results['lw'], lsky_=results['lsky'], es_=results['es'], ed_=results['ed'], eu_=results['eu'], lu_=results['lu'], var_comment2=var_comment2, var_comment3=var_comment3)
                 else:
-                    renamed_results = rename_points_sensor_3(new_name=names_final.get(0, END), lw_=results['lw'], lsky_=results['lsky'], es_=results['es'], quant_sensors=sensores)
+                    renamed_results = rename_points_sensor_3(new_name=names_final.get(0, END), lw_=results['lw'], lsky_=results['lsky'], es_=results['es'], var_comment2=var_comment2, var_comment3=var_comment3)
 
                 file_path = filedialog.asksaveasfilename(defaultextension=".pkl", filetypes=[("Pickle Files", "*.pkl")])
             except:

@@ -1,8 +1,8 @@
-path_es=
-path_lw=
-path_lsky=
+path_es=C:/Users/neyra/Desktop/INPE/Rotinas/rotina-rrs-kd-python/example/ES_SAMIP_5089.txt
+path_lw=C:/Users/neyra/Desktop/INPE/Rotinas/rotina-rrs-kd-python/example/LW_SAM_839B.txt
+path_lsky=C:/Users/neyra/Desktop/INPE/Rotinas/rotina-rrs-kd-python/example/LSKY_SAM_83ad.txt
 path_eu=
 path_ed=
 path_lu=
-sensores=
+sensores=3
 nome_pontos=

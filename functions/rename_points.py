@@ -1,14 +1,40 @@
 import pandas as pd
 
-def sub_names(df, orig_name, new_name):
+def sub_names(df, orig_name, new_name, var_comment2, var_comment3):
+    '''Substitui os nomes originais pelos nomes novos'''
+    
+    #Se tiver somente o Comment e o CommentSub1 ativado
     estacoes = pd.DataFrame({'estacoes_id': df.loc[:, 'CommentSub1']})
+    
+    # Verifica se o usuário ativou o CommentSub2
+    if var_comment2.get():
+        estacoes['estacoes_id'] = estacoes.loc[:,'estacoes_id'] + "_" + df.loc[:,'CommentSub2']
+    
+    # Verifica se o usuário ativou o CommentSub3
+    if var_comment3.get():
+        estacoes['estacoes_id'] = estacoes.loc[:,'estacoes_id'] + "_" + df.loc[:,'CommentSub3']
+                            
     for i in range(len(orig_name)):
         estacoes['estacoes_id'] = estacoes['estacoes_id'].str.replace(orig_name[i], new_name[i])
     df = pd.concat([estacoes, df], axis=1)
     return df
 
-def rename_points_sensor_6(new_name, lw_, lsky_, es_, ed_, eu_, lu_, quant_sensors):
-    orig_name = lw_['CommentSub1'].dropna().unique()
+def rename_points_sensor_6(new_name, lw_, lsky_, es_, ed_, eu_, lu_, var_comment2, var_comment3):
+    '''Essa função renomeia todos os DataFrame'''
+    
+    #Se tiver somente o Comment e o CommentSub1 ativado
+    orig_name_df = pd.DataFrame({'full_name': lw_.loc[:, 'CommentSub1']})
+    
+    # Verifica se o usuário ativou o CommentSub2
+    if var_comment2.get():
+        orig_name_df['full_name'] = orig_name_df.loc[:,'full_name'] + "_" + lw_.loc[:,'CommentSub2']
+    
+    # Verifica se o usuário ativou o CommentSub3
+    if var_comment3.get():
+        orig_name_df['full_name'] = orig_name_df.loc[:,'full_name'] + "_" + lw_.loc[:,'CommentSub3']
+    
+    orig_name = orig_name_df['full_name'].dropna().unique()
+
 
     lw_ = sub_names(df=lw_, orig_name=orig_name, new_name=new_name)
     lsky_ = sub_names(df=lsky_, orig_name=orig_name, new_name=new_name)
@@ -28,12 +54,25 @@ def rename_points_sensor_6(new_name, lw_, lsky_, es_, ed_, eu_, lu_, quant_senso
     
     return resultados
 
-def rename_points_sensor_3(new_name, lw_, lsky_, es_, quant_sensors):
-    orig_name = lw_['CommentSub1'].dropna().unique()
+def rename_points_sensor_3(new_name, lw_, lsky_, es_, var_comment2, var_comment3):
+    '''Essa função renomeia todos os DataFrame'''
+    
+    #Se tiver somente o Comment e o CommentSub1 ativado
+    orig_name_df = pd.DataFrame({'full_name': lw_.loc[:, 'CommentSub1']})
+    
+    # Verifica se o usuário ativou o CommentSub2
+    if var_comment2.get():
+        orig_name_df['full_name'] = orig_name_df.loc[:,'full_name'] + "_" + lw_.loc[:,'CommentSub2']
+    
+    # Verifica se o usuário ativou o CommentSub3
+    if var_comment3.get():
+        orig_name_df['full_name'] = orig_name_df.loc[:,'full_name'] + "_" + lw_.loc[:,'CommentSub3']
+    
+    orig_name = orig_name_df['full_name'].dropna().unique()
 
-    lw_ = sub_names(df=lw_, orig_name=orig_name, new_name=new_name)
-    lsky_ = sub_names(df=lsky_, orig_name=orig_name, new_name=new_name)
-    es_ = sub_names(df=es_, orig_name=orig_name, new_name=new_name)
+    lw_ = sub_names(df=lw_, orig_name=orig_name, new_name=new_name, var_comment2=var_comment2, var_comment3=var_comment3)
+    lsky_ = sub_names(df=lsky_, orig_name=orig_name, new_name=new_name, var_comment2=var_comment2, var_comment3=var_comment3)
+    es_ = sub_names(df=es_, orig_name=orig_name, new_name=new_name, var_comment2=var_comment2, var_comment3=var_comment3)
 
     resultados = {
         'lw': lw_,
