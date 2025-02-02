@@ -19,7 +19,7 @@ def rrs_calculation(data, quant_sensors, rho):
     else:
         resultados = {
             'lw': data['lw'],
-            'lsky': data['lw'],
+            'lsky': data['lsky'],
             'es': data['es'],
             'rrs': rrs
         }
