@@ -1,6 +1,11 @@
-# Rotina RRS e KD em Python
+# Rotina para processamento dos dados medidos com o TriOS-RAMSES
 
-Rotina em Python convertida da rotina em R para pré-processamento e cálculo dos dados de rrs.
+Essa rotina irá processar (organizar) dados extraídos do MSDA (software do RAMSES) de medidas radiométricas hiperespectrais. Os dados do RAMSES deve ser extraídos em um formato padrão específico. 
+
+Neste código, podemos utilizar a situação com três sensores (dados acima da água) ou seis sensores (dados acima da água e em perfil). 
+
+Os outputs são as quantidades radiométricas (Lw, Lsky, Es, Ed, Lu, Eu) e o valor de Reflectancia de Sensoriamento Remoto (Rrs) calculado. Funções para filtro, remoção de outliers nas medidas de Rrs também estão implementadas. 
+
 
 ## Instalação e execução
 
